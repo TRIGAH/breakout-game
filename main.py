@@ -1,46 +1,65 @@
-from turtle import Turtle,Screen
-from paddle import Paddle
-from scoreboard import Scoreboard
-from ball import Ball
-import time
-screen = Screen()
-screen.setup(width=800,height=600)
+import turtle
+
+# Set up the screen
+screen = turtle.Screen()
+screen.title("Breakout Game")
 screen.bgcolor("black")
-screen.title("Pong")
-screen.tracer(0)
+screen.setup(width=600, height=600)
 
-r_paddle = Paddle((0,0))
-l_paddle = Paddle((0,0))
+# Paddle
+paddle = turtle.Turtle()
+paddle.shape("square")
+paddle.color("white")
+paddle.shapesize(stretch_wid=1, stretch_len=5)
+paddle.penup()
+paddle.goto(0, -250)
 
-scoreboard = Scoreboard()
+# Ball
+ball = turtle.Turtle()
+ball.shape("circle")
+ball.color("white")
+ball.penup()
+ball.speed(1)
+ball.goto(0, 0)
+ball.dx = 2
+ball.dy = -2
 
-ball = Ball()
+# Paddle movement
+def paddle_right():
+    x = paddle.xcor()
+    if x < 240:
+        paddle.setx(x + 20)
 
+def paddle_left():
+    x = paddle.xcor()
+    if x > -240:
+        paddle.setx(x - 20)
 
+# Keyboard bindings
 screen.listen()
-screen.onkey(r_paddle.up,"Up")
-screen.onkey(r_paddle.down,"Down")
-screen.onkey(l_paddle.up,"w")
-screen.onkey(l_paddle.down,"s")
+screen.onkeypress(paddle_right, "Right")
+screen.onkeypress(paddle_left, "Left")
 
-is_pong_on = True
-while is_pong_on:
-    time.sleep(ball.move_speed)
+# Main game loop
+while True:
+    # Move the ball
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    # Border checking
+    if ball.xcor() > 290 or ball.xcor() < -290:
+        ball.dx *= -1
+
+    if ball.ycor() > 290:
+        ball.dy *= -1
+
+    # Paddle interaction
+    if (ball.ycor() < -240) and (paddle.xcor() - 50 < ball.xcor() < paddle.xcor() + 50):
+        ball.dy *= -1
+
+    # Game over condition
+    if ball.ycor() < -290:
+        ball.goto(0, 0)
+        ball.dy *= -1
+
     screen.update()
-    ball.move()
-
-    if ball.ycor() > 280 or ball.ycor() < -280:
-        ball.y_bounce()
-
-    if ball.distance(r_paddle) < 50 and ball.xcor() > 320 or ball.distance(l_paddle) < 50 and ball.xcor() < -320:
-        ball.x_bounce()   
-
-    if ball.xcor() > 380:    
-       ball.resetposition()
-       scoreboard.l_point()
-  
-    if  ball.xcor() < -380:    
-        ball.resetposition()
-        scoreboard.r_point()
-  
-screen.exitonclick()
