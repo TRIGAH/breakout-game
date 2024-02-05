@@ -1,6 +1,7 @@
 import turtle
 from paddle import Paddle
 from ball import Ball
+from bricks import Brick
 
 ball = Ball()
 paddle = Paddle((0,-300))
@@ -15,6 +16,9 @@ screen.setup(width=600, height=600)
 screen.listen()
 screen.onkeypress(paddle.paddle_right, "Right")
 screen.onkeypress(paddle.paddle_left, "Left")
+
+brick = Brick()
+brick.create_bricks()
 
 # Main game loop
 while True:
@@ -35,5 +39,13 @@ while True:
     if ball.ycor() < -290:
         ball.goto(0, 0)
         ball.dy *= -1
+
+        
+    # Brick collision
+    for brick in brick.BRICKS:
+        if (brick.ycor() + 10 > ball.ycor() > brick.ycor() - 10) and (brick.xcor() - 40 < ball.xcor() < brick.xcor() + 40):
+            brick.hideturtle()
+            ball.dy *= -1
+
 
     screen.update()
