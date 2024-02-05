@@ -1,4 +1,9 @@
 import turtle
+from paddle import Paddle
+from ball import Ball
+
+ball = Ball()
+paddle = Paddle((0,-300))
 
 # Set up the screen
 screen = turtle.Screen()
@@ -6,46 +11,15 @@ screen.title("Breakout Game")
 screen.bgcolor("black")
 screen.setup(width=600, height=600)
 
-# Paddle
-paddle = turtle.Turtle()
-paddle.shape("square")
-paddle.color("white")
-paddle.shapesize(stretch_wid=1, stretch_len=5)
-paddle.penup()
-paddle.goto(0, -250)
-
-# Ball
-ball = turtle.Turtle()
-ball.shape("circle")
-ball.color("white")
-ball.penup()
-ball.speed(1)
-ball.goto(0, 0)
-ball.dx = 2
-ball.dy = -2
-
-# Paddle movement
-def paddle_right():
-    x = paddle.xcor()
-    if x < 240:
-        paddle.setx(x + 20)
-
-def paddle_left():
-    x = paddle.xcor()
-    if x > -240:
-        paddle.setx(x - 20)
-
 # Keyboard bindings
 screen.listen()
-screen.onkeypress(paddle_right, "Right")
-screen.onkeypress(paddle_left, "Left")
+screen.onkeypress(paddle.paddle_right, "Right")
+screen.onkeypress(paddle.paddle_left, "Left")
 
 # Main game loop
 while True:
-    # Move the ball
-    ball.setx(ball.xcor() + ball.dx)
-    ball.sety(ball.ycor() + ball.dy)
-
+    # Move Ball
+    ball.move()
     # Border checking
     if ball.xcor() > 290 or ball.xcor() < -290:
         ball.dx *= -1
