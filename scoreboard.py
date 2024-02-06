@@ -7,6 +7,7 @@ class Scoreboard(Turtle):
         self.hideturtle()
         self.penup()
         self.score = 0
+        self.bricks_broken = 0
         self.update_scoreboard()
 
 
@@ -16,9 +17,6 @@ class Scoreboard(Turtle):
         self.goto(0,0)
         self.write(f"{self.score}", align="center", font=("Courier",80,"normal"))
     
-    # def r_point(self):
-    #     self.r_score +=1
-    #     self.update_scoreboard()
         
     def point(self):
         self.score +=1
