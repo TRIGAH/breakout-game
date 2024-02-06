@@ -19,6 +19,10 @@ class Scoreboard(Turtle):
         # Increase score when the ball hits the paddle
         self.score += 5
 
+    def lose_life(self):
+        # Decrease score when a life is lost
+        self.score -= 5
+
     def get_score(self):
         return self.score
 
@@ -27,7 +31,6 @@ class Scoreboard(Turtle):
         self.goto(0,200)
         self.write(f"{self.get_score()}", align="center", font=("Courier",80,"normal"))
     
-        
     def point(self):
         self.score +=1
         self.update_scoreboard()

@@ -39,6 +39,11 @@ while True:
         scoreboard.hit_paddle()
         scoreboard.update_scoreboard()
 
+    if (ball.ycor() <= -241):
+        scoreboard.lose_life()   
+        scoreboard.update_scoreboard()
+ 
+
     # Game over condition
     if ball.ycor() < -290:
         ball.goto(0, 0)
