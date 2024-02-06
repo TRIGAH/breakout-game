@@ -19,6 +19,9 @@ class Scoreboard(Turtle):
         # Increase score when the ball hits the paddle
         self.score += 5
 
+    def get_score(self):
+        return self.score
+
     def update_scoreboard(self):
         self.clear()
         self.goto(0,0)
