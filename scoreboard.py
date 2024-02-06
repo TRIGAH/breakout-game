@@ -10,7 +10,10 @@ class Scoreboard(Turtle):
         self.bricks_broken = 0
         self.update_scoreboard()
 
-
+    def break_brick(self):
+        # Increase score when a brick is broken
+        self.score += 10
+        self.bricks_broken += 1
 
     def update_scoreboard(self):
         self.clear()
