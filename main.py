@@ -37,6 +37,7 @@ while True:
     if (ball.ycor() < -240) and (paddle.xcor() - 50 < ball.xcor() < paddle.xcor() + 50):
         ball.dy *= -1
         scoreboard.hit_paddle()
+        scoreboard.update_scoreboard()
 
     # Game over condition
     if ball.ycor() < -290:
@@ -50,6 +51,8 @@ while True:
             brick.hideturtle()
             ball.dy *= -1
             scoreboard.break_brick()
+            scoreboard.update_scoreboard()
+
 
 
     screen.update()
